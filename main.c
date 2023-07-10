@@ -5,6 +5,12 @@
 #include<conio.h>
 #include"Tickets.h"
 
+// TO DO: hay un bug donde si metes un ticket manualmente y vendes otros, no se validan correctamente
+// es debido a que la manera de eliminarlos es por un indice n que puede ser distinto entre wallet y database por introducir tickets
+// manualmente, por ello hay que modificar las funciones de eliminacion para que sea búsqueda->eliminar en lugar de eliminar el término
+// n-ésimo
+
+// Prints database in format "0/1 | ID" for debugging purposes
 void printFullDatabaseInfo(TicketDatabase database)
 {
     for(int i=0; i<database.index; i++)
@@ -71,7 +77,7 @@ int main()
             }
             case 3:
             {
-                // SHOWS ALL MY WALLED TICKETS: BOUGHT AND ADDED MANUALLY
+                // SHOWS ALL MY WALLET TICKETS: BOUGHT AND ADDED MANUALLY
                 printf("\n====== YOUR WALLET ======\n");
                 if(!emptyWallet(wallet))
                     showWalletTickets(wallet);
@@ -105,7 +111,7 @@ int main()
                     }
                     while(n<1 || n>wallet.index);
                     deleteTicketFromWallet(&wallet,n);
-                    deleteTicketFromDatabase(&database,n);
+                    deleteTicketFromDatabase(&database,searchTicketInDatabase(wallet.tickets[n].id,database));
                     printf("Your ticket %d has been sold.\n",n);
                 }
                 else
