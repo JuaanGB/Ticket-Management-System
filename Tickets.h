@@ -43,6 +43,8 @@ void addTicketToDatabase(char * ticketID, TicketDatabase * database);
 
 int emptyWallet(TicketWallet wallet);
 
+int fullWallet(TicketWallet wallet);
+
 void showWalletTickets(TicketWallet wallet);
 
 int emptyDatabase(TicketDatabase database);
@@ -50,6 +52,8 @@ int emptyDatabase(TicketDatabase database);
 void showDatabaseTickets(TicketDatabase database);
 
 void deleteTicketFromWallet(TicketWallet * wallet, int n);
+
+int searchTicketInDatabase(char * id, TicketDatabase database);
 
 void deleteTicketFromDatabase(TicketDatabase * database, int n);
 

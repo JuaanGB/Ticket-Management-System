@@ -45,34 +45,50 @@ int main()
             {
                 // ADD A AUTO-GENERATED TICKET TO YOUR WALLET. YOU BUY TICKETS ON A WEB AND THEY ARE ADDED TO YOUR WALLET AND
                 // THEIR DATABASE
-                int how_many;
-                printf("\nHow many tickets do you want to buy?\nAnswer: ");
-                scanf("%d",&how_many);
-                for(int i=0; i<how_many; i++)
+                if(!fullWallet(wallet))
                 {
-                    char * id;
-                    id = generateTicketID();
-                    addTicketToWallet(id,&wallet);
-                    addTicketToDatabase(id,&database);
+                    int how_many;
+                    printf("\nHow many tickets do you want to buy?\nAnswer: ");
+                    scanf("%d",&how_many);
+                    if(how_many > MAX_WALLET_TICKETS - wallet.index)
+                        printf("You can't buy that amount.\nYou can buy %d tickets maximum.\n",MAX_WALLET_TICKETS-wallet.index);
+                    else
+                    {
+                        for(int i=0; i<how_many; i++)
+                        {
+                            char * id;
+                            id = generateTicketID();
+                            addTicketToWallet(id,&wallet);
+                            addTicketToDatabase(id,&database);
+                        }
+                        printf("\nYour tickets had been added to your account.\nYou can check them in option 3 'See my ticket wallet'\n");
+                    }
                 }
-                printf("\nYour tickets had been added to your account.\nYou can check them in option 3 'See my ticket wallet'\n");
+                else
+                    printf("Your wallet is full! Sell/delete one of your tickets.\n");
                 break;
             }
             case 2:
             {
                 // ADD AN INVENTED TICKET TO YOUR WALLET. PROBABLY IT WON'T BE ON THE DATABASE
                 // THE PROGRAM ASK YOU FOR AN INVENTED ID
-                char id[ID_LENGTH];
-                do
+                if(!fullWallet(wallet))
                 {
-                    printf("Enter the ticket ID (only the three first inputs will be added): ");
-                    scanf("%s",id);
-                    if(!isValidID(id))
-                        printf("That ID is not valid.\n\n");
+                    char id[ID_LENGTH];
+                    do
+                    {
+                        printf("Enter the ticket ID (only the three first inputs will be added): ");
+                        scanf("%s",id);
+                        if(!isValidID(id))
+                            printf("That ID is not valid.\n\n");
+                    }
+                    while(!isValidID(id));
+                    addTicketToWallet(id,&wallet);
+                    printf("Your ticket has been successfully added manually.");
                 }
-                while(!isValidID(id));
-                addTicketToWallet(id,&wallet);
-                printf("Your ticket has been successfully added manually.");
+                else
+                    printf("Your wallet is full! Sell/delete one of your tickets.\n");
+
                 break;
             }
             case 3:

@@ -77,6 +77,12 @@ int emptyWallet(TicketWallet wallet)
     return wallet.index==0;
 }
 
+// Returns 1 if the wallet if full, that means we reached the MAX_WALLET_TICKETS limti
+int fullWallet(TicketWallet wallet)
+{
+    return wallet.index==MAX_WALLET_TICKETS;
+}
+
 // Prints all wallet tickets
 void showWalletTickets(TicketWallet wallet)
 {
